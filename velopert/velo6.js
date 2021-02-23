@@ -1,3 +1,5 @@
+// 객체
+
 const ironMan = {
     name: '토니 스파크',
     actor : '로버트 다우니 주니어',
