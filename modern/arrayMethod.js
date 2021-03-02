@@ -1,0 +1,183 @@
+// delete
+let arr = ["I", "go", "home"];
+delete arr[1];
+console.log(arr);
+
+console.log( arr.length );
+
+// splice
+arr.splice(1,1);
+console.log(arr);
+
+// slice
+// start 부터 end 인덱스 요소를 복사한 새로운 배열 반환
+arr.slice(0,1);
+console.log(arr.slice(0,1));
+
+// concat
+console.log(arr.concat(['am', 'a', 'boy']));
+console.log(arr);
+
+// forEach
+let arr2 = ["Bilbo", "Gandalf", "Nazgul"];
+arr2.forEach(function (item, index, array) {
+    console.log(`${item} is at index ${index} in ${array}`);
+});
+
+arr2.forEach((item, index, array) => { // 화살표 함수
+    console.log(`${item} is at index ${index} in ${array}`);
+});
+
+// find
+let users = [
+    {id: 1, name: "John"},
+    {id: 2, name: "Pete"},
+    {id: 3, name: "Mary"}
+];
+
+let user = users.find(item => item.id == 1);
+console.log(user.name);
+
+// map
+let lengths = ["Bilbo", "Gandalf", "Nazgul"].map(item => item.length);
+console.log(lengths);
+
+// sort
+let arr3 = [ 1, 2, 15 ];
+// arr 내부가 재 정렬됩니다.
+arr3.sort();
+console.log(arr3);  // 1, 15, 2
+
+function compare(a,b) {
+    if(a > b) return 1;
+    if(a == b) return 0;
+    if(a < b) return -1;
+}
+
+arr3.sort(compare);
+console.log(arr3);
+
+
+let arr4 = [1, -2, 15, 2, 0, 8]; 
+arr4.sort(function(a,b) {
+    console.log(a + " <> " + b);
+    return a-b;
+});
+
+arr4.sort(function(a,b) { return a-b; });
+console.log(arr4);
+
+arr4.sort( (a,b) => a-b );
+console.log(arr4);
+
+// reverse
+arr4.reverse();
+console.log(arr4);
+
+// split
+let names = 'Bilbo, Gandalf, Nazgul';
+let arrNm = names.split(', ');
+let arrNm2 = names.split(', ', 2);
+
+for ( let name of arrNm ) {
+    console.log(`${name}에게 보내는 메시지`);
+}
+for ( let name2 of arrNm2 ) {
+    console.log(`${name2}에게 보내는 메시지`);
+}
+
+// 문자열을 글자 단위로 분리 split('')
+let str = "test";
+console.log(str.split(''));
+
+// join
+let arr5 = ['Bilbo', 'Gandalf', 'Nazgul'];
+let str1 = arr5.join(';');
+console.log(str1);
+
+// reduce
+let value =  arr5.reduce(function(accumulator, item, index, array) {
+    console.log(accumulator); // 이전 함수 호출의 결과. initial은 함수 최초 호출 시 사용되는 초깃값을 나타냄(옵션)
+    console.log(item); // 현재 배열 요소
+    console.log(index); // 요소의 위치
+    console.log(array); // 배열
+    return accumulator+ "d";
+});
+
+let arr6 = [ 1,2,3,4,5 ];
+let result = arr6.reduce((sum, current) => sum + current , 0); // 초깃값 0   -> 초깃값 없으면 배열이 비어있는 상태일 때, reduce 호출 시 에러!
+console.log(result);
+
+// let arrEmp = [];
+// arrEmp.reduce((sum,current) => sum + current );
+// console.log(arrEmp);
+// TypeError: Reduce of empty array with no initial value
+
+
+// Array.isArray 로 배열 여부 알아내기
+console.log(typeof{}); // object
+console.log(typeof[]); // object
+
+console.log(Array.isArray({}));
+console.log(Array.isArray([]));
+
+
+// 배열메소드와 thisArg
+// arr.find(func, thisArg);
+// arr.filter(func, thisArg);
+// arr.map(func, thisArg);
+// thisArg 는 선택적으로 사용할 수 있는 마지막 인수
+
+let army = {
+    minAge : 18,
+    maxAge : 27,
+    canJoin(user1) {
+        return user1.age >= this.minAge && user1.age < this.maxAge;
+    }
+};
+
+let users1 = [
+    {age: 16},
+    {age: 20},
+    {age: 23},
+    {age: 30}
+];
+
+// army.canJoin 호출 시 참을 반환해주는 user를 찾음
+let soldiersNo = users1.filter(army.canJoin); // 단독함수처럼 취급되고 함수 본문 내 this는 undefined가 되어 에러가 발생했을것 
+let soldiers = users1.filter(army.canJoin, army);
+console.log(soldiersNo); // []
+console.log(soldiers); // [ { age: 20 }, { age: 23 } ]
+console.log(soldiers[0].age); // 20
+console.log(soldiers[1].age); // 23
+
+
+function camelize(str) {
+    return str.split('-').map((item, index) =>  
+        index === 0 ? item : item.charAt(0).toUpperCase()+item.slice(1)).join('');
+}
+
+camelize("background-color") == 'backgroundColor'; // true
+camelize("list-style-image") == 'listStyleImage'; // true
+camelize("-webkit-transition") == 'WebkitTransition'; // true
+
+
+let arr7 = [5,3,8,1];
+let filtered = filterRange(arr7, 1, 4);
+console.log(filtered); // 3,1
+
+function filterRange(arr7, a, b) {
+    let result = arr7.filter(item => item >= a && item <= b);
+    return result;
+}
+
+
+let arr8 = [5, 3, 8, 1];
+filterRangeInPlace(arr8, 1, 4); // 1과 4 사이에 있지 않은 요소는 모두 제거함
+console.log( arr8 ); // [3, 1]
+
+function filterRangeInPlace(arr8, a, b) {
+    for (let arr in arr8) {
+        console.log(arr8[arr]);
+    }
+}
