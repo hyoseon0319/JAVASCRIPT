@@ -166,18 +166,149 @@ let arr7 = [5,3,8,1];
 let filtered = filterRange(arr7, 1, 4);
 console.log(filtered); // 3,1
 
-function filterRange(arr7, a, b) {
+function filterRange(arr, a, b) {
     let result = arr7.filter(item => item >= a && item <= b);
     return result;
 }
 
 
-let arr8 = [5, 3, 8, 1];
+let arr8 = [5, 3, 8, 1, 9, 10, 2, 1, 4];
 filterRangeInPlace(arr8, 1, 4); // 1과 4 사이에 있지 않은 요소는 모두 제거함
-console.log( arr8 ); // [3, 1]
+console.log('결과', arr8 ); // [3, 1]
 
-function filterRangeInPlace(arr8, a, b) {
-    for (let arr in arr8) {
-        console.log(arr8[arr]);
+function filterRangeInPlace(arr, a, b) {
+    for (let ar = 0; ar < arr.length; ar ++) {
+        if( arr[ar] < a || b < arr[ar] ) {
+            arr.splice(ar,1);
+            ar--;
+        }
     }
 }
+
+let arr9 = [5, 2, 1, -10, 8];
+arr9.sort((a,b) => b-a); // 내림차순 정렬
+// return 값이 0보다 클 경우, a,b 순으로 요소 정렬
+console.log(arr9);
+
+arr9.sort((a,b) => a-b); // 오름차순 정렬
+// return 값이 0보다 작을 경우, a,b 순으로 요소 정렬
+console.log(arr9);
+
+
+// 배열 복사본을 정렬하기
+let arr10 = ["HTML", "JavaScript", "CSS"];
+let sorted = copySorted(arr10);
+console.log(sorted); // [ 'CSS', 'HTML', 'JavaScript' ]
+console.log(arr10); // [ 'HTML', 'JavaScript', 'CSS' ]
+// 변경x
+
+function copySorted(arr, a, b) {
+   return arr.slice().sort();
+}
+
+// 확장 가능한 계산기
+// let calc = new Calculator;
+// console.log(calc.calculate("3+7")); // 10
+
+// function calculate() {
+
+// }
+
+
+
+// let powerCalc = new Calculator;
+
+
+
+
+let john = { name: "John", age: 25 };
+let pete = { name: "Pete", age: 30 };
+let mary = { name: "Mary", age: 28 };
+let users2 = [ john, pete, mary ];
+let names2 = users2.map(item => item.name);
+console.log( names2 ); // John, Pete, Mary
+
+
+
+let john1 = { name: "John", surname: "Smith", id: 1 };
+let pete1 = { name: "Pete", surname: "Hunt", id: 2 };
+let mary1 = { name: "Mary", surname: "Key", id: 3 };
+
+let users3 = [ john1, pete1, mary1 ];
+
+let usersMapped = users3.map(item => ({ // 중괄호 -> 객체의 시작
+    fullName : `${item.name} ${item.surname}`,
+    id : user.id
+}));
+/*
+usersMapped = [
+  { fullName: "John Smith", id: 1 },
+  { fullName: "Pete Hunt", id: 2 },
+  { fullName: "Mary Key", id: 3 }
+]
+*/
+console.log( usersMapped[0].id ) // 1
+console.log( usersMapped[0].fullName ) // John Smith
+
+
+sortByAge(users2);
+// now: [john, mary, pete]
+console.log(users2[0].name); // John
+console.log(users2[1].name); // Mary
+console.log(users2[2].name); // Pete
+
+
+function sortByAge(users) {
+    users.sort((a,b)=> a.age-b.age 
+    // {
+    //     console.log('a==' , a.age);
+    //     console.log('b==' , b.age);
+    //     return a.age-b.age;
+    // }
+    );   
+}
+
+
+let array = [1, 2, 3];
+
+shuffle(array);
+// array = [3, 2, 1]
+
+shuffle(array);
+// array = [2, 1, 3]
+
+shuffle(array);
+// array = [3, 1, 2]
+
+function shuffle(array) {
+    array.sort(() => Math.random()-0.5);
+    console.log(array);
+}
+
+
+let john3 = { name: "John", age: 25 };
+let pete3 = { name: "Pete", age: 30 };
+let mary3 = { name: "Mary", age: 29 };
+
+let arrThr = [ john3, pete3, mary3 ];
+
+console.log( getAverageAge(arrThr) ); // (25 + 30 + 29) / 3 = 28
+
+
+function getAverageAge (arr) {
+    return arr.reduce((acc, cur) => acc+cur.age, 0);
+}
+
+function unique(arr) {
+    let results = [];
+    for(let str of arr) {
+        if(!results.includes(str)){
+        results.push(str);
+        }
+    }
+    console.log(results);
+}
+
+let strings = ["Here", "Krishna", "Hare", "Krishna", "Krishna", "Krishna", "Hare", "Hare", ":-0"];
+console.log( unique(strings) ); // Hare, Krishna, :-0
+
