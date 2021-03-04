@@ -195,3 +195,106 @@ console.log(width3);
 console.log(height3);
 
 
+// 중첩 구조 분해
+let options4 = {
+    size : {
+        width4: 1001,
+        height4: 2001
+    },
+    items: ["Cake", "Donut"],
+    extra: true
+};
+
+let {
+    size: {
+        width4,
+        height4
+    },
+    items: [item1, item2],
+    title4= "Menu444"
+} = options4;
+
+console.log(title4);
+console.log(width4);
+console.log(height4);
+console.log(item1);
+console.log(item2);
+
+// 함수에 전달할 객체
+let options5 = {
+    title: "My menu",
+    items: ["Item1", "Item2"]
+  };
+
+  
+// 똑똑한 함수 매개변수
+function showMenu(title="Untitled", width=200, height=100, items=[]) { // 매개변수가 많아질수록 가독성 떨어짐
+    console.log(`${title} ${width} ${height}`);
+    console.log(items);
+}
+// 기본값을 사용해도 괜찮은 경우 undefined를 여러 개 넘겨줌
+// 가독성 떨어짐
+showMenu("My Menu", undefined, undefined, ["Item1", "Item2"]);
+
+// 구조분해
+// 매개변수를 객체에 모아서 함수에 전달
+// 함수가 전달받은 객체를 분해 -> 변수에 할당 -> 작업수행
+
+// 함수 리팩토링
+let options6 = {
+    title: "My coffee",
+    items: ["ice", "hot"]
+  };
+
+function showMenu1({
+    title = "Untitled",
+    width: w = 100,  // width는 w에,
+    height: h = 200, // height는 h에,
+    items: [item1, item2] // items의 첫 번째 요소는 item1에, 두 번째 요소는 item2에 할당함
+  }) {
+      console.log(`${title} ${w} ${h}`);
+      console.log(item1);
+      console.log(item2);
+  }
+
+  showMenu1(options6);
+
+// showMenu({}); // 모든 인수에 기본값이 할당됨 , 빈 객체를 명시적으로 전달
+// showMenu(); // 에러가 발생할 수 있음
+
+function showMenu2({ title = "Menu", width = 100, height = 200 } = {}) {
+    console.log(`${title} ${width} ${height}`);
+}
+showMenu2(); // Menu 100 200
+
+// let {prop : varName = default, ...rest} = object
+// let [item1 = default, item2, ...rest] = array
+
+
+let user1 = { name3: "John", years: 30 };
+let {name3, years:age, isAdmin = false} = user1
+
+console.log(name3); // John
+console.log(age); // 30
+console.log(isAdmin); // false
+
+// 최대 급여 계산기
+let salaries = {
+    "John": 100,
+    "Pete": 300,
+    "Mary": 250
+  };
+
+function topSalary(salaries) {
+    let max = 0;
+    let maxNm = null;
+
+    for (const [name, salary] of Object.entries(salaries)) {
+        if (max < salary) {
+            max = salary;
+            maxNm = name;
+        }
+      }
+      return maxNm;
+}
+console.log(topSalary(salaries));
